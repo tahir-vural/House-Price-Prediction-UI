@@ -1,0 +1,105 @@
+<div class="jumbotron" id="main-container">
+  <div class="modal-header">
+    <h2 class="modal-title" id="house-price"><i class="fas fa-home"></i> House Pricing</h2>
+  </div>
+  <div  class="modal-body">
+    <p><strong>Ülke: </strong>Amerika Birleşik Devletleri</p>
+    <p> <strong>Eyalet:</strong>  Kaliforniya</p><br>
+
+    <form [formGroup]="housePriceFormGroup" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="mszoning">MS Zoning</label>
+          <select id="mszoning" class="form-control" [formControlName]="FORM_NAME.MSZONING" required>
+            <option [value]="null" selected disabled>Choose MS Zoning</option>
+            <option *ngFor="let mszoning of houseData?.MSZoning" [ngValue]="mszoning">{{mszoning}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.BLDGTYPE">Bldg Type</label>
+          <select class="form-control" [id]="FORM_NAME.BLDGTYPE" [formControlName]="FORM_NAME.BLDGTYPE" required>
+            <option [value]="null" selected disabled>Choose Bldg Type</option>
+            <option *ngFor="let bldgType of houseData?.BldgType" [ngValue]=" bldgType">{{bldgType}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.HEATINGQC">Heating QC</label>
+          <select class="form-control" [id]="FORM_NAME.HEATINGQC" [formControlName]="FORM_NAME.HEATINGQC" required>
+            <option [value]="null" selected disabled>Choose a Heating QC</option>
+            <option *ngFor="let heatingQC of houseData?.HeatingQC" [ngValue]="heatingQC">{{heatingQC}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.YEARBUILT">Year Built</label>
+          <select class="form-control" [id]="FORM_NAME.YEARBUILT" [formControlName]="FORM_NAME.YEARBUILT" required>
+            <option [value]="null" selected disabled>Choose a Year Built</option>
+            <option *ngFor="let yearBuilt of houseData?.YearBuilt" [ngValue]="yearBuilt">{{yearBuilt}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.HEATING">Heating</label>
+          <select class="form-control" [id]="FORM_NAME.HEATING" [formControlName]="FORM_NAME.HEATING" required>
+            <option [value]="null" selected disabled>Choose a Heating</option>
+            <option *ngFor="let heating of houseData?.Heating" [ngValue]="heating">{{heating}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.KITCHENQUAL">Kitchen Qual</label>
+          <select class="form-control" [id]="FORM_NAME.KITCHENQUAL" [formControlName]="FORM_NAME.KITCHENQUAL" required>
+            <option [value]="null" selected disabled>Choose a Kitchen Qual</option>
+            <option *ngFor="let kitchenQual of houseData?.KitchenQual" [ngValue]="kitchenQual">{{kitchenQual}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.GARAGECARS">Garage cars</label>
+          <select class="form-control" [id]="FORM_NAME.GARAGECARS" [formControlName]="FORM_NAME.GARAGECARS" required>
+            <option [value]="null" selected disabled>Choose a Garage cars</option>
+            <option *ngFor="let garageCar of houseData?.GarageCars" [ngValue]="garageCar">{{garageCar}}</option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.FULLBATH">Full bath</label>
+          <select class="form-control" [id]="FORM_NAME.FULLBATH" [formControlName]="FORM_NAME.FULLBATH" required>
+            <option [value]="null" selected disabled>Choose a Full bath</option>
+            <option *ngFor="let fullBath of houseData?.FullBath" [ngValue]="fullBath">{{fullBath}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.SALETYPE">Sale Type</label>
+          <select class="form-control" [id]="FORM_NAME.SALETYPE" [formControlName]="FORM_NAME.SALETYPE" required>
+            <option [value]="null" selected disabled>Choose a Sale Type</option>
+            <option *ngFor="let saleType of houseData?.SaleType" [ngValue]="saleType">{{saleType}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label [for]="FORM_NAME.SALECONDITION">Sale Condition</label>
+          <select class="form-control" [id]="FORM_NAME.SALECONDITION" [formControlName]="FORM_NAME.SALECONDITION" required>
+            <option [value]="null" selected disabled>Choose a Sale Condition</option>
+            <option *ngFor="let saleCondition of houseData?.SaleCondition" [ngValue]="saleCondition">{{saleCondition}}
+            </option>
+          </select>
+        </div>
+      </div>
+        <button type="submit" [disabled]="!housePriceFormGroup.valid" class="btn btn-success">Predict
+          price</button>
+    </form>
+  </div>
+</div>
+
+<div [class]="popup"  id="exampleModalCenter" tabindex="-1" (click)="clickOther($event)" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">House price predict</h5>
+
+      </div>
+      <div class="modal-body">
+        <h5>{{housePredictedPrice}}</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeButton" class="btn btn-secondary" (click)="onClick()" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
